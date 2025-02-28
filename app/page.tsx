@@ -169,7 +169,7 @@ const ChatApp: React.FC = () => {
   // Auto-scroll to bottom when messages update
   useEffect(() => {
     scrollToBottom();
-  }, []);
+  }, [messages]);
 
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
@@ -300,13 +300,13 @@ const ChatApp: React.FC = () => {
   // Format message text with code blocks
   const formatMessageText = (text: string) => {
     // Split by code blocks (text between \`\`\`)
-    const parts = text.split(/(\`\`\`[\s\S]*?\`\`\`)/g);
+    const parts = text.split(/(```[\s\S]*?```)/g);
 
     return parts.map((part, index) => {
       // Check if this part is a code block
       if (part.startsWith("```") && part.endsWith("```")) {
         // Extract language and code
-        const match = part.match(/\`\`\`(\w*)\n([\s\S]*?)\`\`\`/);
+        const match = part.match(/```(\w*)\n([\s\S]*?)```/);
         if (!match)
           return (
             <pre
@@ -656,10 +656,12 @@ const ChatApp: React.FC = () => {
           box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
             0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
+
+        /* Tailwind base styles */
       `}</style>
 
       {/* Your existing component JSX */}
-      <div className="flex flex-col h-screen bg-gradient-custom">
+      <div className="flex flex-col h-screen w-full bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900">
         {/* Header */}
         <div className="bg-blue-600 text-white p-4 shadow-md">
           <div className="max-w-4xl mx-auto flex items-center gap-3">
@@ -670,11 +672,11 @@ const ChatApp: React.FC = () => {
           </div>
         </div>
 
-        {/* Messages Container */}
-        <div className="flex-1 overflow-hidden max-w-4xl w-full mx-auto px-4 py-6">
+        {/* Messages Container - Full width and height */}
+        <div className="flex-1 w-full mx-auto p-4 overflow-hidden">
           <Card className="h-full border rounded-xl shadow-lg bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
             <CardContent className="p-0 h-full">
-              <ScrollArea className="h-full p-6" ref={scrollAreaRef}>
+              <ScrollArea className="h-full p-4">
                 <div className="space-y-6">
                   {messages.length === 0 && (
                     <div className="flex flex-col items-center justify-center h-[50vh] text-center text-gray-500">
@@ -850,14 +852,8 @@ const ChatApp: React.FC = () => {
 
         {/* Voice Recognition Modal */}
         {showVoiceModal && (
-          <div
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50"
-            style={{ animation: "fadeIn 0.2s ease-out" }}
-          >
-            <div
-              className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl max-w-md w-full mx-4 overflow-hidden"
-              style={{ animation: "scaleIn 0.3s ease-out" }}
-            >
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+            <div className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl max-w-md w-full mx-4 overflow-hidden">
               <div className="p-6 flex flex-col items-center">
                 <div className="w-full h-24 flex items-center justify-center mb-4">
                   {/* Voice waveform visualization */}
