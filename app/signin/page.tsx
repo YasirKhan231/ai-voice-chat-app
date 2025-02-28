@@ -1,25 +1,26 @@
-// import { signIn, useSession } from "next-auth/react";
-// import { useRouter } from "next/router";
-// import { useEffect } from "react";
+"use client";
+import { useRouter } from "next/navigation";
+import { signInWithGoogle } from "../firebase/auth";
 
-// const SignIn = () => {
-//   const { data: session } = useSession();
-//   const router = useRouter();
+export default function SignInPage() {
+  const router = useRouter();
 
-//   useEffect(() => {
-//     if (session) router.push("/");
-//   }, [session, router]);
+  const handleSignIn = async () => {
+    const user = await signInWithGoogle();
+    if (user) {
+      router.push("/"); // Redirect to home after successful sign-in
+    }
+  };
 
-//   return (
-//     <div className="flex items-center justify-center h-screen">
-//       <button
-//         onClick={() => signIn("google")}
-//         className="px-6 py-3 text-white bg-blue-500 rounded-lg"
-//       >
-//         Sign in with Google
-//       </button>
-//     </div>
-//   );
-// };
-
-// export default SignIn;
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <h1 className="text-2xl font-bold">Sign In</h1>
+      <button
+        onClick={handleSignIn}
+        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg"
+      >
+        Sign in with Google
+      </button>
+    </div>
+  );
+}

@@ -1,32 +1,16 @@
-// import { signOut, useSession } from "next-auth/react";
+"use client";
+import { logOut } from "../firebase/auth";
 
-// const Signout = () => {
-//   const { data: session } = useSession();
-
-//   return (
-//     <div className="flex flex-col items-center justify-center h-screen">
-//       {session ? (
-//         <>
-//           <h1 className="mb-4 text-lg font-bold">
-//             Welcome, {session.user?.name}!
-//           </h1>
-//           <button
-//             onClick={() => signOut()}
-//             className="px-6 py-3 text-white bg-red-500 rounded-lg"
-//           >
-//             Sign Out
-//           </button>
-//         </>
-//       ) : (
-//         <a
-//           href="/signin"
-//           className="px-6 py-3 text-white bg-blue-500 rounded-lg"
-//         >
-//           Sign In
-//         </a>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Home;
+export default function SignOutPage() {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <h1 className="text-2xl font-bold">Sign Out</h1>
+      <button
+        onClick={logOut}
+        className="mt-4 bg-red-500 text-white px-4 py-2 rounded-lg"
+      >
+        Sign Out
+      </button>
+    </div>
+  );
+}
