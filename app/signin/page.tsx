@@ -14,7 +14,7 @@ export default function SignInPage() {
       setIsLoading(true);
       const user = await signInWithGoogle();
       if (user) {
-        router.push("/"); // Redirect to home after successful sign-in
+        router.push("/onboarding"); // Redirect to home after successful sign-in
       }
     } catch (error) {
       console.error("Sign in error:", error);
